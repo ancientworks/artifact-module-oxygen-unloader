@@ -26,7 +26,7 @@ defined('ABSPATH') || exit; ?>
                                 'route' => 'dashboard',
                                 'module_id' => Unloader::$module_id,
                                 'action' => 'toggleMUPlugin',
-                                '_wpnonce' => wp_create_nonce('artifact')
+                                '_wpnonce' => wp_create_nonce(Artifact::$slug)
                             ], admin_url('admin.php')) ?>" type="button" class="dops-button is-compact is-primary"><?= Unloader::is_mu_installed() ? 'disable' : 'enable' ?></a>
             </div>
         </div>
