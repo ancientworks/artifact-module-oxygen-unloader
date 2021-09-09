@@ -23,20 +23,24 @@
  * @version             0.0.1
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
-require_once WP_PLUGIN_DIR . '/ancientworks-artifact/vendor/autoload.php';
+if (!defined('ARTIFACT_FILE')) {
+    return;
+}
 
-add_filter( 'option_active_plugins', function($active_plugins) {
+require_once WP_PLUGIN_DIR . '/' . rtrim(plugin_basename(ARTIFACT_FILE), basename(ARTIFACT_FILE)) . 'vendor/autoload.php';
+
+add_filter('option_active_plugins', function ($active_plugins) {
     require_once ABSPATH . 'wp-includes/pluggable.php';
 
-    if ( ! \AncientWorks\Artifact\Utils\OxygenBuilder::can() ) {
-        $oxygen_index = array_search( 'oxygen/functions.php', $active_plugins );
+    if (!\AncientWorks\Artifact\Utils\OxygenBuilder::can()) {
+        $oxygen_index = array_search('oxygen/functions.php', $active_plugins);
 
-        if ( false !== $oxygen_index ) {
-            array_splice( $active_plugins, $oxygen_index, 1 );
+        if (false !== $oxygen_index) {
+            array_splice($active_plugins, $oxygen_index, 1);
         }
     }
 
     return $active_plugins;
-} );
+});
